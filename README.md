@@ -6,5 +6,5 @@
 + Then do : npm install 
 + All moduls will be installed.
 
-+
+
 + When you have installed modules, delete file README.md and rename README(2).md to README.md
