@@ -27,15 +27,29 @@
             + Import stylesheets from other directories
             + Use a different or additional preprocessor, like SASS, SCSS or Stylus
     -->
-
+	
+	 <!--SCRIPTS-->
+ 	<script src="/js/jquery.js"></script>
+ 	<script src="/js/jquery.validate.js"></script>
+ 	<script src="/js/dependencies/sails.io.js"></script>
+ 	<script src="/js/socket.io.js"></script>
+ 	<script src="/js/sails.io.js"></script>
+ 	<script src="/js/bootstrap.js"></script>
+ 	<script src="/js/bootstrap.min.js"></script>
+ 	<script src="/js/validacia.js"></script>
+ 	<!--SCRIPTS END-->
+	
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/bootstrap.css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/stylish-portfolio.css">
     <!--STYLES END-->
 	
+	
+	
+	
 	<!--FONTS-->    
-	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -56,16 +70,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" id="BielaFarbaPisma1" href="/static/index" onclick = $("#menu-close").click();>Self Teaching</a>
+                <a class="navbar-brand page-scroll" id="BielaFarbaPisma1" href="/" >Self Teaching</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" id="nav_pages">
                     <li>
-                        <a class="page-scroll" id="BielaFarbaPisma2" href="#portfolio">Sign In</a>
+                        <a class="page-scroll" id="BielaFarbaPisma2" href="/user/new">Sign Up</a>
                     </li>
                     <li>
-                        <a class="page-scroll" id="BielaFarbaPisma3" href="#portfolio">Registration</a>
+                        <a class="page-scroll" id="BielaFarbaPisma3" href="/user/new">Registration</a>
                     </li>
                     <li>
                         <a href="#footer_" id="BielaFarbaPisma4" onclick = $("#menu-close").click(); >Contact</a>
@@ -82,6 +96,7 @@
 	
 	<!-- Footer -->
     <footer id= "footer_">
+	<div id="oddelovac"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
@@ -194,11 +209,6 @@
 
     -->
 
-    <!--SCRIPTS-->
-	<script src="/sails.io/sails.io.js"></script>
-	<script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/bootstrap.min.js"></script>    
-    <!--SCRIPTS END-->
+   
   </body>
 </html>
