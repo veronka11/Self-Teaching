@@ -40,12 +40,13 @@ module.exports.connections = {
   * Run: npm install sails-mysql                                             *
   *                                                                          *
   ***************************************************************************/
-  someMysqlServer: {
+  MysqlServer: {
     adapter: 'sails-mysql',
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
     password: 'databaza',
-    database: 'twa'
+    database: 'test',
+    port: 3306
   },
 
   /***************************************************************************
@@ -74,13 +75,15 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  somePostgresqlServer: {
-    adapter: 'sails-postgresql',
-    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user: 'YOUR_POSTGRES_USER',
-    password: 'YOUR_POSTGRES_PASSWORD',
-    database: 'YOUR_POSTGRES_DB'
-  }
+  productionPostgresqlServer: {
+	adapter: 'sails-postgresql',
+	host: process.env.OPENSHIFT_POSTGRESQL_DB_HOST,
+	port: process.env.OPENSHIFT_POSTGRESQL_DB_PORT,
+	user: process.env.OPENSHIFT_POSTGRESQL_DB_USERNAME,
+	password: process.env.OPENSHIFT_POSTGRESQL_DB_PASSWORD,
+	database: 'quickfixapp'
+}
+
 
 
   /***************************************************************************

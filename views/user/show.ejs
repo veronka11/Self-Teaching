@@ -1,0 +1,10 @@
+<script>
+  var clientJsonVar = <%- JSON.stringify(user) %>
+    console.log(clientJsonVar);
+</script>
+<div class="container" style="margin-top:80px;">
+  <h1><%= user.name %></h1>
+  <hr>
+  <h3>contact: <%= user.email %> </h3>
+  <a class="btn btn-medium btn-primary" href="/user/edit/' +<%= user.id %>">Edit</a>
+</div>
