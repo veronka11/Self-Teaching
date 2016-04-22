@@ -7,8 +7,8 @@
 
 module.exports = {
 
-  //schema: true,
-  
+  schema: true,
+
   attributes: {
 
     name: {
@@ -17,6 +17,10 @@ module.exports = {
     },
     surname: {
       type: 'string'
+    },
+    typeof_user: {
+      type: 'integer',
+      defaultsTo : 2
     },
     age: {
       type: 'integer',
