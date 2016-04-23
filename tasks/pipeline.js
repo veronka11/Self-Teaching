@@ -24,7 +24,9 @@ var cssFilesToInject = [
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-  'js/myscript.js',
+  'js/showAllCategoriesTests.js',
+  'js/controlOfTest.js',
+  
   'js/jquery.js',
   'js/jquery.validate.js',
 

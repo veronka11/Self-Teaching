@@ -29,7 +29,7 @@
   -->
 
   <!--SCRIPTS-->
-  <script src="/js/myscript.js"></script>
+  <script src="/js/showAllCategoriesTests.js"></script>
   <script src="/js/jquery.js"></script>
   <script src="/js/jquery.validate.js"></script>
   <script src="/js/dependencies/sails.io.js"></script>
@@ -69,13 +69,25 @@
       </button>
       <a class="navbar-brand" id="BielaFarbaPisma1" href="/">Self Teaching</a>
       <a class="navbar-brand" id="BielaFarbaPisma2" href="/user/new">Registration</a>
-      <a class="navbar-brand" id="BielaFarbaPisma3" href="#footer_" onclick = $("#menu-close").click();  >Contact</a>
+      <a class="navbar-brand" id="BielaFarbaPisma3" href="#footer_" onclick=$("#menu-close").click();>Contact</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <% if (session.authenticated) { %>
-        <li class="active"><a href="/user/show/<%= session.User.id %>"><%= session.User.username %> </a></li>
+        <li class="active"><a href="/user/show/<%= session.User.id %>" style="background-color: #5A898E;
+    border-style: hidden;
+    border-radius: 24px 5px;"><%= session.User.name %> </a></li>
         <% } %>
+
+        <script>
+          $(document).ready(function () {
+            <% if (session.authenticated) { %>
+            var clientJsonVar = <%- session.User.id %>;
+            console.log("clientJsonVar   ...  ", clientJsonVar);
+            <% } %>
+          });
+        </script>
+
         <% if (session.authenticated && (session.User.typeof_user == 1) ) { %>
         <li><a href="/user">User Administration</a></li>
         <li><a href="#">Placeholder2</a></li>
@@ -87,6 +99,7 @@
         <% } %>
       </div>
       <% if (!session.authenticated) { %>
+
       <form class="navbar-form navbar-right" action="/session/create">
         <div class="form-group">
           <input type="text" placeholder="Email" name="email" class="form-control">

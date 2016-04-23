@@ -33,6 +33,11 @@ module.exports = {
     },
     password: {
       type: 'string'
+    },
+    categories: {
+      collection: 'category',
+      via: 'id_user2',
+      dominant: true
     }
     /*,
     toJSON: function () {

@@ -1,0 +1,83 @@
+<div class="container" style="margin-top: 80px;" xmlns="http://www.w3.org/1999/html">
+
+  <form action="/user/create" method="POST" class="form-horizontal" id="formular">
+    <fieldset id="polia">
+
+      <!-- Form Name -->
+      <legend><h3>New Category</h3></legend>
+
+      <% if(flash && flash.err) { %>
+      <ul class="alert alert-success">
+        <% Object.keys(flash.err).forEach(function(error) { %>
+        <li><%- JSON.stringify(flash.err[error]) %></li>
+        <% }) %>
+      </ul>
+      <% } %>
+
+      <% if(flash.message) { %>
+      <div class="alert alert-success">
+        <strong>Success!</strong> Your category was successfully created.
+      </div>
+      <% } %>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input id="" name="name" type="text" placeholder="Name of Category" class="form-control">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input id="" name="word" type="text" placeholder="Word" class="form-control">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input name="word_translation" type="text" placeholder="Word's Transation" class="form-control">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+      <!-- Password input-->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input name="public" type="public" placeholder="public" class="form-control">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Create new Line</button>
+
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Category"/>
+          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+    </fieldset>
+  </form>
+
+</div>

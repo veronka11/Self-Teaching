@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
+  'new': function (req, res) {
+    res.view('test/new');		//ziadna funkcia po res.view sa nevykona treba mat vsetko predtym
+  }
+
 };
 

@@ -31,7 +31,7 @@ module.exports = {
       req.session.flash = {
         err: usernamePasswordRequiredError
       }
-      res.redirect('/session/new');
+      res.redirect('/');
       return;
     }
 
@@ -45,7 +45,8 @@ module.exports = {
         req.session.flash = {
           err: noAccountError
         }
-        res.redirect('/session/new');
+        //res.redirect('/session/new');
+        res.redirect('/');
         return;
       }
 
@@ -57,7 +58,8 @@ module.exports = {
         req.session.flash = {
           err: passwordError
         }
-        res.redirect('/session/new');
+        //res.redirect('/session/new');
+        res.redirect('/');
         return;
       }
 

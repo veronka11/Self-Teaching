@@ -1,58 +1,65 @@
+<!-- Navigation -->
+<!--<div class="medzera" style="margin-top: 80px;"></div>-->
 
-    <!-- Navigation -->
+  <% if(session.flash && session.flash.err) { %>
+  <ul class="alert alert-danger" style="margin:0px; margin-top: 80px;">
+    <% Object.keys(session.flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(session.flash.err[error]) %></li>
+    <% }) %>
+  </ul>
+    <% session.flash = {} %>
+  <% } %>
 
+  <!-- Header -->
+  <header id="top" class="header">
+    <div class="text-vertical-center">
+      <h1 class="nadpis">Self Teaching</h1>
+      <h3>Teach yourself languages stylish &amp; new</h3>
+      <br>
+      <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header id="top" class="header">
-        <div class="text-vertical-center">
-            <h1 class="nadpis">Self Teaching</h1>
-            <h3>Teach yourself languages stylish &amp; new</h3>
-            <br>
-            <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
+  <!-- About -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2>Teach yourself stylish with this webside!</h2>
+          <p class="lead">You can create here many own tests, categories, in which you can teach self.</p>
         </div>
-    </header>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
+  </section>
 
-    <!-- About -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Teach yourself stylish with this webside!</h2>
-                    <p class="lead">You can create here many own tests, categories, in which you can teach self.</p>
-                </div>
-            </div>
-            <!-- /.row -->
+
+  <!-- Callout -->
+  <aside class="callout">
+    <div class="text-vertical-center" id="Registration">
+      <h1>Your own world, where you can teach</h1>
+    </div>
+  </aside>
+
+
+  <!-- Call to Action -->
+  <aside class="call-to-action bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h3>The buttons below are impossible to resist.</h3>
+          <a href="/user/registration" class="btn btn-lg btn-light">Register Now!</a>
+          <a href="/user/signIn" class="btn btn-lg btn-dark">Sign in!</a>
         </div>
-        <!-- /.container -->
-    </section>
+      </div>
+    </div>
+  </aside>
 
 
-    <!-- Callout -->
-    <aside class="callout">
-        <div class="text-vertical-center" id="Registration">
-            <h1>Your own world, where you can teach</h1>
-        </div>
-    </aside>
+  <!-- Footer -->
 
-   
-    <!-- Call to Action -->
-    <aside class="call-to-action bg-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h3>The buttons below are impossible to resist.</h3>
-                    <a href="/user/registration" class="btn btn-lg btn-light">Register Now!</a>
-                    <a href="/user/signIn" class="btn btn-lg btn-dark">Sign in!</a>
-                </div>
-            </div>
-        </div>
-    </aside>
 
-   
 
-    <!-- Footer -->
-	
-	
-    
 
-    
+

@@ -72,18 +72,51 @@ module.exports = {
     });
   },
 
-  //skenuje view (/views/show.ejs)
-  //console.log(req.params);
-  //console.log(req.params['id']);
+  //vyberanie dat z tabulky user, category
   show: function (req, res, next) {
+    var object = {};
     User.findOne(req.param('id'), function foundUser(err, user) {
       if (err) return next(err);
       if (!user) return next();
       console.log("show", user);
-      res.view({
-        user: user
+      object.actualUser = req.param('id');
+      object.userN = user;
+
+      /* Category.find({id_user2: req.param('id')}, {select: [name, id]}, function foundCategories(err2, categories) {
+       if (err2) return next(err2);
+       object.categories = categories;
+       res.view(object);
+       });*/
+      var idUser = req.param('id');
+      var idUserString = idUser.toString();
+
+      //najde vsetky kategorie uzivatela + aj tie kt publikuju ostatny uzivatelia
+      Category.query("SELECT * FROM test.category where id_user=" + idUserString + " or (id_user <> " + idUserString + " and public=1)", function (err2, categories) {
+        if (err2) return next(err2);
+        object.categories = categories;
+        //najde vsetky testy daneho uzivatela
+
+        Category.query("SELECT * FROM test.test where id_user=" + idUserString, function (err3, tests) {
+          if (err3) return next(err3);
+          console.log("tests  ", tests);
+          object.tests = tests;
+          console.log(object);
+          res.view({o: object});
+        });
+
+        //res.view(object);
       });
+
+
+      /*
+       res.view({
+       user: user
+       });
+       */
+
     });
+
+
   }
 
 

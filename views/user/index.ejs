@@ -14,23 +14,24 @@
 
     <% _.each(users, function(user) { %>
     <tr data-id="<%= user.id %>" data-model="user">
-      <% if (user.online) { %>
-      <td><img src="/images/icon-online.png"></td>
+      <% if (user.typeof_user == 2) { %>
+      <td><td><span class="glyphicon glyphicon-user" aria-hidden="true"></span></td></td>
       <% } else { %>
-      <td><img src="/images/icon-offline.png"></td>
+      <td><td><span class="glyphicon glyphicon-user" style="color:#81ff8b" aria-hidden="true"></span></td></td>
       <% } %>
       <td><%= user.id %></td>
       <td><%= user.name %></td>
       <td><%= user.surname %></td>
       <td><%= user.email %></td>
-      <% if (user.admin) { %>
-      <td><img src="/images/admin.png"></td>
+      <% if (user.typeof_user == 1) { %>
+      <td><span class="glyphicon glyphicon-edit red" aria-hidden="true"></span></td>
       <% } else { %>
-      <td><img src="/images/pawn.png"></td>
+      <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
       <% } %>
+      <!--
       <td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
       <td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
-
+      -->
       <td>
         <form action="/user/destroy/<%= user.id %>" method="POST">
           <input type="hidden" name="_method" value="delete"/>

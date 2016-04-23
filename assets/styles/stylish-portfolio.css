@@ -11,6 +11,18 @@ body {
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/*formular2 category*/
+.oddel1 {
+  margin: 8px;
+}
+
+#formular2 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/**/
+
 /*sign*/
 #sign {
   background-color: rgba(51, 175, 123, 0.79);
@@ -21,10 +33,12 @@ body {
   padding: 20px;
   text-align: center;
 }
-#buttonSign{
+
+#buttonSign {
   border-color: rgba(11, 12, 11, 0.54);
   background-color: rgb(86, 56, 119);
 }
+
 /*sign*/
 
 /*formular*/
@@ -83,6 +97,13 @@ body {
 
 h1.nadpis {
   font-size: 8.5em;
+}
+
+h2.nadpis2 {
+  border-bottom-style: double;
+  border-color: beige;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
 }
 
 /* Custom Button Styles */

@@ -7,16 +7,19 @@
 
 module.exports = {
 
-  attributes: {
-    id_user2:{
-      type:'integer'
+  attributes: {    
+    name: {
+      type: 'string'
     },
-    name:{
-      type:'string'
+    public: {
+      type: 'integer'
     },
-    public:{
-      type:'integer'
+
+    id_user2: {
+      collection: 'user',
+      via: 'categories'
     }
+
   }
 
 };

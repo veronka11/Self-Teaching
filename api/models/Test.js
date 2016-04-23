@@ -9,11 +9,14 @@ module.exports = {
 
   attributes: {
 
-    id_user:{
-      type : 'integer'
+    name: {
+      type: 'string'
     },
-    id_category:{
-      type : 'integer'
+    id_user: {
+      type: 'integer'
+    },
+    id_category: {
+      type: 'integer'
     }
   }
 };
