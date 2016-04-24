@@ -10,10 +10,6 @@ module.exports = {
   'new': function (req, res, next) {
     console.log(req.params.all());
     console.log("+++");
-    /*User.findOneById(req.param('id')).exec(function(err, user){
-     console.log("user  ",user);
-     //res.view({ user: user });
-     });*/
     res.view({id: req.param('id')}, 'category/new');		//ziadna funkcia po res.view sa nevykona treba mat vsetko predtym
   },
 
@@ -45,14 +41,6 @@ module.exports = {
           return res.redirect('/category/new');
         }
 
-        /*
-         var employee = { name: 'Winnie', location: 'Australia' };
-         con.query('INSERT INTO employees SET ?', employee, function(err,res){
-         if(err) throw err;
-
-         console.log('Last insert ID:', res.insertId);
-         });
-         */
         var word = req.param('word');
         var translation = req.param('word_translation');
         var id = categor1.id;
@@ -101,21 +89,55 @@ module.exports = {
         if (err3) return next(err3);
         console.log("...patterns ", patterns);
         console.log('categor....', editCategory);
-        
-        req.session.flash = {
-          message: true
-        }
+
+        var obj = {categories: editCategory, pattern: patterns};
         res.view({
           categories: editCategory,
-          pattern: patterns
+          pattern: patterns,
+          id_user: editCategory.id_user
         });
-
       }); //pattern.query end
-
-
     }); //Category.findOne end
+  }, //edit end
 
-  } //edit end
+  // process the info from edit view
+  update: function (req, res, next) {
+    console.log("********  ", req.params.all());
+
+    Category.update(req.param('id'), req.params.all(), function userUpdated(err) {
+      if (err) {
+        return res.redirect('/category/edit/7');
+      }
+
+      var word = req.param('word');
+      var translation = req.param('word_translation');
+      var id = req.param('id');
+      var values = [];
+      var IDwords = req.param('IDwords');
+      var query = "";
+      if (typeof (word) == "string") { //mam len 1 slovo+preklad
+        values.push({word: word, word_translation: translation, id: IDwords});
+        //values.push({word: word, word_translation: translation});
+        //values.push([word, translation]);
+      } else {
+        for (var i = 0; i < word.length; i++) {
+          values.push({word: word[i], word_translation: translation[i], id: IDwords[i]});
+          //values.push({word: word[i], word_translation: translation[i]});
+          //values.push([word[i], translation[i]]);
+        }
+      }
+      console.log("values", values);
+      //Pattern.query("UPDATE test.pattern SET ? WHERE id_category=" + id.toString(), values, function (err3, patterns) {
+      //Pattern.query("UPDATE test.pattern SET ?, ? WHERE ? AND id_category=" + id.toString(), values, function (err3, patterns) {
+      Pattern.query("UPDATE test.pattern SET word = " + req.param('word') + ", word_translation= " + req.param('word_translation') + " WHERE id = " + req.param('IDwords'), function (err3, patterns) {
+          if (err3) return next(err3);
+          res.redirect('/user/show/' + req.param('id_user'));
+        }
+      )
+      ; //pattern.query end
+      //res.redirect('/user/show/' + req.param('id_user'));
+    }); // Category.update end
+  }
 
 }
 

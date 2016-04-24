@@ -82,7 +82,7 @@
         <script>
           $(document).ready(function () {
             <% if (session.authenticated) { %>
-            var clientJsonVar = <%- session.User.id %>;
+            var clientJsonVar = <%= session.User.id %>;
             console.log("clientJsonVar   ...  ", clientJsonVar);
             <% } %>
           });

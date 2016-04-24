@@ -67,11 +67,11 @@
 
 <div class="container" style="margin-top: 80px;">
 
-  <form action="/category/create" method="POST" class="form-horizontal" id="formularCategory">
+  <form action="/category/update/<%= categories.id %>" method="POST" class="form-horizontal" id="formularCategory">
     <fieldset id="polia">
 
       <!-- Form Name -->
-      <legend><h3>New Category</h3></legend>
+      <legend><h3>Edit category <%= categories.name %></h3></legend>
 
       <% if(flash && flash.err) { %>
       <ul class="alert alert-success">
@@ -91,7 +91,8 @@
       <div class="form-group">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <input id="" name="name" type="text" placeholder="Name of Category" value="<% categories.name %>"
+          <label class="control-label" >Name of Category</label>
+          <input id="" name="name" type="text" placeholder="Name of Category" value="<%= categories.name %>"
                  class="form-control">
         </div>
         <div class="col-md-3"></div>
@@ -130,12 +131,16 @@
         <div class="col-md-3"></div>
       </div>
 
+
       <div id="blockPatterns" style="/*border-top-style: none; padding-top: 24px;*/">
+        <% _.each(pattern, function(patterns) { %>
+        <input type="hidden" name="IDwords" value="<%= patterns.id %>"/>
         <!-- Text input-->
         <div class="form-group">
           <div class="col-md-3"></div>
           <div class="col-md-6">
-            <input name="word" type="text" placeholder="Word" class="form-control x">
+            <label class="control-label" >word</label>
+            <input name="word" id="w<%= patterns.id %>" type="text" placeholder="" value="<%= patterns.word %>" class="form-control">
           </div>
           <div class="col-md-3"></div>
         </div>
@@ -144,10 +149,13 @@
         <div class="form-group">
           <div class="col-md-3"></div>
           <div class="col-md-6">
-            <input name="word_translation" type="text" placeholder="Word's Transation" class="form-control x">
+            <label class="control-label" >Translation</label>
+            <input name="word_translation" id="t<%= patterns.id %>" type="text" placeholder="" value="<%= patterns.word_translation %>" class="form-control">
           </div>
           <div class="col-md-3"></div>
         </div>
+
+        <% }); %>  <!-- forech -->
 
       </div>
 
@@ -168,6 +176,7 @@
         <div class="col-md-6">
           <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Category"/>
           <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+          <input type="hidden" name="id_user" value="<%= id_user %>"/>
         </div>
         <div class="col-md-3"></div>
       </div>

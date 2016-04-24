@@ -30,10 +30,10 @@ $(document).ready(function () {
       },
       word: {
         required: true,
-        minlength: 4
+        minlength: 1
       },
       word_translation: {
-        minlength: 4,
+        minlength: 1,
         required: true
       }
     },
