@@ -34,11 +34,11 @@ module.exports = {
     password: {
       type: 'string'
     },
-    categories: {
+   /* categories: {
       collection: 'category',
       via: 'id_user2',
       dominant: true
-    }
+    }*/
     /*,
     toJSON: function () {
       var obj = this.toObject();

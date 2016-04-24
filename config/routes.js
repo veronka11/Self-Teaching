@@ -46,6 +46,7 @@ module.exports.routes = {
   category: {
     'new': "flash",
     create: "flash",
+    edit: "flash",
     '*': "sessionAuth"
   }
 

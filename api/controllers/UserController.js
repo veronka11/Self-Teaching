@@ -10,12 +10,8 @@ module.exports = {
   'new': function (req, res) {
     res.view();		//ziadna funkcia po res.view sa nevykona treba mat vsetko predtym
   },
-  /*'signIn': function (req, res) {
-   res.view();		//ziadna funkcia po res.view sa nevykona treba mat vsetko predtym
-   },*/
+
   index: function (req, res, next) {
-    //console.log(new Date());
-    //console.log(req.session.authenticated);
 
     User.find(function foundUsers(err, users) {
       if (err) return next(err);
@@ -26,10 +22,7 @@ module.exports = {
     });
   },
   create: function (req, res, next) {
-    //console.log("path  ");
-    //var slug = req.param('slug');
-    //create a User with the params sent from
-    //the sign-up form --> new.ejs
+
     User.create(req.params.all(), function userCreated(err, user) {
       //console.log(req.path);
       if (err) {
@@ -44,14 +37,14 @@ module.exports = {
       //res.json(user); //nahradene za ukadanie user.id
 
       //user.typeof_user = 5;
-      console.log(user);
-      console.log(JSON.stringify(user));
+      //console.log(user);
+      //console.log(JSON.stringify(user));
 
       //res.redirect('/user/show/' + user.id);
       req.session.flash = {
         message: true
       }
-      res.redirect('/user/new');
+      res.redirect('/user/new'); //res.redirect('/user/show/' + user.id);  zrusene kvoli tomu ze je to hlavna stranka
 
     });
   },
@@ -78,43 +71,58 @@ module.exports = {
     User.findOne(req.param('id'), function foundUser(err, user) {
       if (err) return next(err);
       if (!user) return next();
-      console.log("show", user);
-      object.actualUser = req.param('id');
-      object.userN = user;
 
-      /* Category.find({id_user2: req.param('id')}, {select: [name, id]}, function foundCategories(err2, categories) {
-       if (err2) return next(err2);
-       object.categories = categories;
-       res.view(object);
-       });*/
+      object.actualUser = user;
+
+
       var idUser = req.param('id');
       var idUserString = idUser.toString();
 
       //najde vsetky kategorie uzivatela + aj tie kt publikuju ostatny uzivatelia
-      Category.query("SELECT * FROM test.category where id_user=" + idUserString + " or (id_user <> " + idUserString + " and public=1)", function (err2, categories) {
+      //Category.query("SELECT * FROM test.test inner join test.user on user.id = test.id_user and test.id_user=5")
+
+      //QUERY - inner join + UNION + vyberanie z viacerych tabuliek
+      Category.query("SELECT category.name as nameC, public, category.id as idC, category.id_user as id_user, user.name as nameU " +
+        "FROM test.category " +
+        "inner join test.user on " +
+        "user.id = id_user and id_user=" + idUserString +
+        " Union " +
+        "SELECT category.name as nameC, public, category.id as idC, category.id_user as id_user, user.name as nameU " +
+        "FROM test.category " +
+        "inner join test.user on " +
+        "user.id = id_user and ((id_user<>" + idUserString + ") and (public = 1))", function (err2, categories) {
         if (err2) return next(err2);
+
         object.categories = categories;
+
         //najde vsetky testy daneho uzivatela
-
-        Category.query("SELECT * FROM test.test where id_user=" + idUserString, function (err3, tests) {
+        Test.query("SELECT * FROM test.test where id_user=" + idUserString, function (err3, tests) {
           if (err3) return next(err3);
-          console.log("tests  ", tests);
+
           object.tests = tests;
-          console.log(object);
-          res.view({o: object});
-        });
 
-        //res.view(object);
-      });
+          //pattern
+          //
+          // SELECT id_category AS idC, word, word_translation FROM (SELECT id FROM tia.category WHERE id_user =5 OR (id_user <>5 AND public =1)) AS a, tia.pattern WHERE a.id = id_category
+          Pattern.query("SELECT id_category AS idC, word, word_translation FROM (SELECT id FROM test.category WHERE id_user =" +
+            idUserString + " OR (id_user <>" +
+            idUserString + " AND public =1)) AS a, test.pattern " +
+            "WHERE a.id = id_category", function (err4, patterns) {
+            if (err4) return next(err4);
+
+            object.patterns = patterns;
+
+            res.view({o: object});
+
+          }); //pattern.query end
 
 
-      /*
-       res.view({
-       user: user
-       });
-       */
+        }); //test.query end
 
-    });
+
+      }); //category.query end
+
+    }); //User.query end
 
 
   }

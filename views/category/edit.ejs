@@ -91,7 +91,8 @@
       <div class="form-group">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <input id="" name="name" type="text" placeholder="Name of Category" class="form-control">
+          <input id="" name="name" type="text" placeholder="Name of Category" value="<% categories.name %>"
+                 class="form-control">
         </div>
         <div class="col-md-3"></div>
       </div>
@@ -104,14 +105,24 @@
           <div class="col-md-8">
             <div class="radio">
               <label for="radios-11">
-                <input type="radio" name="public" id="radios-00" value="1" checked="checked">
-                Yes
+                <% if (categories.public == 1){ %>
+                  <input type="radio" name="public" id="radios-00" value="1" checked="checked">
+                  Yes
+                <% } else { %>
+                  <input type="radio" name="public" id="radios-00" value="1">
+                  Yes
+                <% } %>
               </label>
             </div>
             <div class="radio">
               <label for="radios-11">
-                <input type="radio" name="public" id="radios-11" value="0">
-                No
+                <% if (categories.public == 0){ %>
+                 <input type="radio" name="public" id="radios-11" value="0" checked="checked">
+                  No
+                <% } else { %>
+                  <input type="radio" name="public" id="radios-11" value="0">
+                  No
+                <% } %>
               </label>
             </div>
           </div>
@@ -157,7 +168,6 @@
         <div class="col-md-6">
           <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Category"/>
           <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-          <input type="hidden" name="id_user" value="<%= id %>"/>
         </div>
         <div class="col-md-3"></div>
       </div>

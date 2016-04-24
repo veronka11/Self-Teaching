@@ -1,7 +1,19 @@
 <script>
-  var clientJsonVar = <%- JSON.stringify(o.actualUser) %>
-    console.log(clientJsonVar);
-  console.log(<%- JSON.stringify(o) %>);
+
+  var povodnaVyska;
+  function hideTr(id) {
+    if ($(".hide" + id).css('display') == 'none') {
+      povodnaVyska = $("#vyska").height();
+      $(".hide" + id).show(1000);
+      var novaVyska = $("#vyska").height();
+      document.getElementById('ciara').style.height = novaVyska.toString() + "px";
+    } else {
+      $(".hide" + id).hide(1000);
+      document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+    }
+  }
+
+
 </script>
 
 <div class="container" style="margin-top: 80px;">
@@ -9,28 +21,69 @@
   <div class="row">
     <div class="col-md-5" id="vyska">
       <h2 class="nadpis2">All Categories</h2>
-      <a href="/category/new" class="btn btn-info" role="button">Create new Category</a>
+      <a href="/category/new/<%= o.actualUser.id %>" class="btn btn-info" type="submit" role="button">Create new Category</a>
+
 
       <!--Table for all categories of user and of all users with public = true (1) -->
-      <table class="table table-condensed" style="margin-top: 30px;">
+      <table class="table table-condensed table-hover" style="margin-top: 30px;">
         <tr class="info">
           <td></td>
           <td><strong>User</strong></td>
           <td><strong>Category</strong></td>
           <td></td>
           <td></td>
+          <td></td>
+          <td></td>
         </tr>
         <% _.each(o.categories, function(categor) { %>
-        <tr data-id="<%= o.userN.id %>" data-model="categories" class="active">
-          <!--<div class="row" style="margin: 12px; "> -->
+        <tr data-id="<%= categor.id_user %>" data-model="categories" class="active">
           <td><span class="glyphicon glyphicon-user" style="color:black; margin: 5px;" aria-hidden="true"></span></td>
-          <td><%= o.userN.name %></td>
-          <td><%= categor.name %></td>
+          <td><%= categor.nameU %></td>
+          <td><%= categor.nameC %></td>
           <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-          <td><a href="/user/show/<%= o.userN.id %>" class="btn btn-sm btn-primary">Show</a></td>
-          <!-- </div> -->
+          <td>
+            <button class="btn btn-sm btn-primary" id="<%= categor.idC %>" onclick="hideTr(this.id)">Show</button>
+          </td>
+          <td><a href="/category/edit/<%= categor.idC %>" class="btn btn-sm btn-warning">Edit</a></td>
+          <td>
+            <form action="/user/destroy/<%= categor.id_user %>" method="POST">
+              <input type="hidden" name="_method" value="delete"/>
+              <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+            </form>
+          </td>
         </tr>
+
+        <!-- TRANSLATION-->
+
+        <tr class="hide<%= categor.idC %>" style="display:none; background-color: rgba(255, 37, 42, 0.45);">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><strong>Word</strong></td>
+          <td><strong>Translation</strong></td>
+          <td></td>
+        </tr>
+
+        <% _.each(o.patterns, function(p) { %>
+        <% if (categor.idC == p.idC) { %>
+        <tr class="hide<%= categor.idC %>" style="display:none;">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= p.word %></td>
+          <td><%= p.word_translation %></td>
+          <td></td>
+        </tr>
+        <% } %>
+
         <% }) %>
+        <!-- end of pattern-->
+
+        <% }) %>
+        <!-- end of categories-->
       </table>
 
     </div>
@@ -39,7 +92,7 @@
     <script>
       $(document).ready(function () {
         console.log("+++++++++++++");
-        console.log(<% JSON.stringify(o.userN) %>);
+        console.log(<% JSON.stringify(o.actualUser) %>);
         var b = $("#vyska").height();
         document.getElementById('ciara').style.height = b.toString() + "px";
       });
@@ -48,9 +101,10 @@
       <h2 class="nadpis2">All tests</h2>
       <a href="/test/new" class="btn btn-info" role="button">Create new Test</a>
 
+
       <!--Table for all categories of user and of all users with public = true (1) -->
       <% if (Object.keys(o.tests).length > 0 ) { %>
-      <table class="table table-condensed" style="margin-top: 30px;">
+      <table class="table table-condensed table-hover" style="margin-top: 30px;">
         <tr class="info">
           <td></td>
           <td><strong>User</strong></td>
@@ -59,21 +113,19 @@
           <td></td>
         </tr>
         <% _.each(o.tests, function(tests) { %>
-        <tr data-id="<%= o.userN.id %>" data-model="test" class="active">
-          <!--<div class="row" style="margin: 12px; "> -->
+        <tr data-id="<%= o.actualUser.id %>" data-model="test" class="active">
           <td><span class="glyphicon glyphicon-user" style="color:black; margin: 5px;" aria-hidden="true"></span></td>
-          <td><%= o.userN.name %></td>
+          <td><%= o.actualUser.name %></td>
           <td><%= tests.name %></td>
           <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-          <td><a href="/user/show/<%= o.userN.id %>" class="btn btn-sm btn-primary">Show</a></td>
-          <!-- </div> -->
+          <td><a href="/user/show/<%= tests.id_user %>" class="btn btn-sm btn-primary">Show</a></td>
         </tr>
         <% }) %>
       </table>
       <% } else { %>
-        <div class="alert alert-info" style="margin-top: 15px;">
-          <strong>Info!</strong> You haven't created any test yet.
-        </div>
+      <div class="alert alert-info" style="margin-top: 15px;">
+        <strong>Info!</strong> You haven't created any test yet.
+      </div>
       <% } %>
     </div>
   </div>
