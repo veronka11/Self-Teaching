@@ -42,4 +42,24 @@ $(document).ready(function () {
     }
   });
 
+  $('#formularTest').validate({
+    rules: {
+      name: {
+        required: true,
+        minlength: 4
+      },
+      word: {
+        required: true,
+        minlength: 1
+      },
+      word_translation: {
+        minlength: 1,
+        required: true
+      }
+    },
+    success: function (element) {
+      element.text('OK').addClass('valid')
+    }
+  });
+
 });
