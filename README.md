@@ -7,7 +7,7 @@
 * vie sa prihlásiť
 
 
-###užívateľ
+###Užívateľ
 * Vie sa prihlásiť
 * Vie sa registrovať
 * Vie si vytvoriť kategóriu so šablónami (ešte problém s update šablónami kt. sa momentálne rieši - zatiaľ update len jednej)
