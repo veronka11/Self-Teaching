@@ -1,31 +1,79 @@
-<!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand page-scroll" id="BielaFarbaPisma1" href="/" >Self Teaching</a>
-    </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav" id="nav_pages">
-        <li>
-          <a class="page-scroll" id="BielaFarbaPisma2" href="/session/new">Sign Up</a>
-        </li>
-        <li>
-          <a class="page-scroll" id="BielaFarbaPisma3" href="/user/new">Registration</a>
-        </li>
-        <li>
-          <a href="#footer_" id="BielaFarbaPisma4" onclick = $("#menu-close").click(); >Contact</a>
-        </li>
+<script>
+
+  function specificCategory() {
+    $('#selector').show(300);
+    $('#selectorR').show(300);
+    random = false;
+  }
+
+  function allCategories() {
+    $('#selector').hide(300);
+    $('#selectorR').hide(300);
+    random = true;
+  }
+
+  function VratID_Name_category() {
+    //ID
+    var selectBox = document.getElementById("selector");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].id;
+    document.getElementById("id_category").value = selectedValue;
+    //NAME
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    document.getElementById("name_category").value = selectedValue;
+  }
+
+  function Zapamataj() {
+    console.log("zapamataj");
+    var selectBox = document.getElementById("selector");
+    categoryID = selectBox.options[selectBox.selectedIndex].id;
+    categoryName = selectBox.options[selectBox.selectedIndex].value;
+    testName = document.getElementById("testName").value;
+    countOfPatterns = document.getElementById("countOfPatterns").value;
+  }
+
+</script>
+
+<div class="container" style="margin-top: 80px;">
+
+
+  <form action="/test/selfTesting" method="POST" class="form-horizontal" id="formularTest2">
+    <fieldset id="polia">
+
+      <!-- Form Name -->
+      <legend><h3>New Test</h3></legend>
+
+      <% if(flash && flash.err) { %>
+      <ul class="alert alert-success">
+        <% Object.keys(flash.err).forEach(function(error) { %>
+        <li><%- JSON.stringify(flash.err[error]) %></li>
+        <% }) %>
       </ul>
-    </div>
-    <!-- /.navbar-collapse -->
-  </div>
-  <!-- /.container -->
-</nav>
+      <% } %>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input id="numberofwords" value="" name="count" type="text" placeholder="Insert number of patterns"
+                 class="form-control">
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Test"/>
+          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+          <input type="hidden" name="test" value="<%= true %>"/>
+
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+    </fieldset>
+  </form>
+
+</div>

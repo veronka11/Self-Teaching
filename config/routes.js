@@ -32,7 +32,7 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  //'post /user/create':'UserController.create',
+  'get /test/selfTesting/:id/:name/:radios/:count':'TestController.selfTesting',
 
 
   '/': {
@@ -48,7 +48,14 @@ module.exports.routes = {
     create: "flash",
     edit: "flash",
     '*': "sessionAuth"
-  }
+  },
+  test: {
+    'new': "flash",
+    'selfTesting': "flash",
+    create: "flash",
+    edit: "flash",
+    '*': "sessionAuth"
+  },
 
   /*,
 

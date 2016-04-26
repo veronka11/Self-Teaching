@@ -45,12 +45,16 @@
             <button class="btn btn-sm btn-primary" id="<%= categor.idC %>" onclick="hideTr(this.id)">Show</button>
           </td>
           <td><a href="/category/edit/<%= categor.idC %>" class="btn btn-sm btn-warning">Edit</a></td>
+
           <td>
-            <form action="/user/destroy/<%= categor.id_user %>" method="POST">
+            <% if (o.actualUser.id == categor.id_user){ %>
+            <form action="/category/destroy/<%= categor.idC %>" method="POST">
               <input type="hidden" name="_method" value="delete"/>
               <input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+              <input type="hidden" name="id_user" value="<%= o.actualUser.id %>"/>
               <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
             </form>
+            <% } %>
           </td>
         </tr>
 

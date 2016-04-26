@@ -51,17 +51,13 @@ module.exports = {
 
 
   destroy: function (req, res, next) {
-
     User.findOne(req.param('id'), function foundUser(err, user) {
       if (err) return next(err);
-
       if (!user) return next('User doesn\'t exist.');
-
       User.destroy(req.param('id'), function userDestroyed(err) {
         if (err) return next(err);
       });
       res.redirect('/user');
-
     });
   },
 
@@ -73,7 +69,6 @@ module.exports = {
       if (!user) return next();
 
       object.actualUser = user;
-
 
       var idUser = req.param('id');
       var idUserString = idUser.toString();
@@ -111,7 +106,7 @@ module.exports = {
             if (err4) return next(err4);
 
             object.patterns = patterns;
-
+            //console.log("o..__ ",object);
             res.view({o: object});
 
           }); //pattern.query end

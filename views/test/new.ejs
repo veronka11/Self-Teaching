@@ -1,5 +1,39 @@
-<div class="container" style="margin-top: 80px;" >
+<script>
 
+  function specificCategory() {
+    $('#selector').show(300);
+    $('#selectorR').show(300);
+    random = false;
+  }
+
+  function allCategories() {
+    $('#selector').hide(300);
+    $('#selectorR').show(300);
+    random = true;
+  }
+
+  function VratID_Name_category() {
+    //ID
+    var selectBox = document.getElementById("selector");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].id;
+    document.getElementById("id_category").value = selectedValue;
+    //NAME
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    document.getElementById("name_category").value = selectedValue;
+  }
+
+  function Zapamataj(){
+    console.log("zapamataj");
+    var selectBox = document.getElementById("selector");
+    categoryID = selectBox.options[selectBox.selectedIndex].id;
+    categoryName = selectBox.options[selectBox.selectedIndex].value;
+    testName = document.getElementById("testName").value;
+    countOfPatterns = document.getElementById("countOfPatterns").value;
+  }
+
+</script>
+
+<div class="container" style="margin-top: 80px;">
   <form action="/test/create" method="POST" class="form-horizontal" id="formularTest">
     <fieldset id="polia">
 
@@ -24,7 +58,7 @@
       <div class="form-group">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <input id="" name="name" type="text" placeholder="Name of Test" class="form-control">
+          <input id="testName" value="" name="name" type="text" placeholder="Name of Test" class="form-control">
         </div>
         <div class="col-md-3"></div>
       </div>
@@ -33,11 +67,11 @@
       <div class="form-group">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <input name="numberofwords" type="text" placeholder="Number of words" class="form-control">
+          <input id="numberofwords" value="" name="numberofwords" type="text" placeholder="Insert number of patterns"
+                 class="form-control">
         </div>
         <div class="col-md-3"></div>
       </div>
-
 
       <!-- Text input-->
       <div class="form-group">
@@ -47,13 +81,13 @@
           <div class="col-md-8">
             <div class="radio">
               <label for="radios-1">
-                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+                <input type="radio" name="radios" id="radios-0" value="1" checked="checked" onclick="allCategories()">
                 Random from all category
               </label>
             </div>
             <div class="radio">
               <label for="radios-1">
-                <input type="radio" name="radios" id="radios-1" value="2">
+                <input type="radio" name="radios" id="radios-1" value="2" onclick="specificCategory()">
                 Specific category
               </label>
             </div>
@@ -63,18 +97,23 @@
       </div>
 
       <!-- $('#id').find('option:selected').text(); zisti kt je vybrany -->
-
-      <select id="selector" style="margin-bottom: 15px;">
-        <% _.each(categories, function(categ) { %>
-          <option value="volvo" id="<%= categ.id %>"><%= categ.name %></option>
-        <% }); %>
-      </select>
+      <div class="form-group">
+        <label for="selector2" id="selectorR">Choose from all categories </label>
+        <select class="selector2" id="selector" style="margin-bottom: 15px; display: none;"
+                onchange="VratID_Name_category(this.id)">
+          <% _.each(categories, function(categ) { %>
+          <option value="<%= categ.name %>" id="<%= categ.id %>"><%= categ.name %></option>
+          <% }); %>
+        </select>
+        <input type="hidden" name="id_category" id="id_category" value="-1"/>
+        <input type="hidden" name="name_category" id="name_category" value=""/>
+      </div>
 
       <!-- Button -->
       <div class="form-group">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create new Test"/>
+          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create new Test" />
           <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
           <input type="hidden" name="id_user" value="<%= id %>"/>
         </div>

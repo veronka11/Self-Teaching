@@ -46,20 +46,33 @@ $(document).ready(function () {
     rules: {
       name: {
         required: true,
-        minlength: 4
+        minlength: 3
       },
-      word: {
+      numberofwords: {
         required: true,
-        minlength: 1
-      },
-      word_translation: {
-        minlength: 1,
-        required: true
+        min: 3
       }
     },
     success: function (element) {
       element.text('OK').addClass('valid')
     }
   });
+
+  $('#formularTest2').validate({
+    rules: {
+      name: {
+        required: true,
+        minlength: 3
+      },
+      numberofwords: {
+        required: true,
+        min: 3
+      }
+    },
+    success: function (element) {
+      element.text('OK').addClass('valid')
+    }
+  });
+
 
 });

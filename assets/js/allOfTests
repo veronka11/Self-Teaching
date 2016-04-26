@@ -1,0 +1,32 @@
+$(document).ready(function () {
+
+
+});
+
+
+//dostane zoznam vsetkzch predloh z kt si vybera
+//
+function nahodnyVyber(pocet, pattern) {
+  if (pocet >= pattern.length) {
+    for (var i = 0; i < pattern.length; i++) {
+      pattern[i].answer = "";
+      pattern[i].result = "";
+    }
+    return pattern;
+  } else {
+    var pole = [];
+    var pozicia = [];
+    var j = 0;
+    while (pocet > 0) {
+      var hod = Math.floor((Math.random() * pattern.length));
+      if (pozicia.indexOf(hod) == -1) {
+        pattern[hod].answer = "";
+        pattern[hod].result = "";
+        pole.push(pattern[hod]);
+        pozicia.push(hod);
+        pocet = pocet - 1;
+      }
+    }
+    return pole;
+  }
+}

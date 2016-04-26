@@ -25,9 +25,12 @@ body {
   margin-top: 20px;
   text-align: center;
 }
-#formularTest {
+#formularTest, #formularTest2, #Answer {
   margin-top: 20px;
   text-align: center;
+}
+#Answer{
+
 }
 /**/
 
