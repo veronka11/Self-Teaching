@@ -18,3 +18,8 @@
 
 >- Z funkctionality teda chýba už len funkcia pre vyberanie náhodného obsahu šablón, kt mám v súčasnosti naprogramovanú ale ešte nefunguje pre objekty poslané na stránku cez kontroler.
 >- Zvyšok je už len preliknkovanie + použitie blueprints pre lepšie adresovanie
+
+
+**Momentálne stránka nie je nikde online snažím sa o spojazdnenie ale zatiaľ sa mi to nepodarilo**
+
+*Cieľ spojazdniť stránku tu:* [selfTeaching](http://tia-selfteaching.rhcloud.com/)
