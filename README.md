@@ -1,5 +1,5 @@
 # Self Teaching
-## Už je hotové (do nedele polnoci): 
+## Už je hotové : 
 
 ###Admin
 * vie vymazat užívateľa
@@ -17,4 +17,4 @@
 * Kategórie sa dajú vymazať, na úprave sa pracuje
 
 >- Z funkctionality teda chýba už len funkcia pre vyberanie náhodného obsahu šablón, kt mám v súčasnosti naprogramovanú ale ešte nefunguje pre objekty poslané na stránku cez kontroler.
->-Zvyšok je už len preliknkovanie + použitie blueprints pre lepšie adresovanie
+>- Zvyšok je už len preliknkovanie + použitie blueprints pre lepšie adresovanie
