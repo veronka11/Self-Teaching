@@ -1,4 +1,5 @@
-# Self Teaching <h1> tag
-
-## Už je hotové: <h2> tag
+# Self Teaching <h1> 
+## Už je hotové: <h2> 
+>
+>
 
