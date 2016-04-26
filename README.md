@@ -1,3 +1,4 @@
-# app
+# Self Teaching <h1> tag
 
-a [Sails](http://sailsjs.org) application
+## Už je hotové: <h2> tag
+
