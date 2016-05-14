@@ -1,6 +1,6 @@
 # Self Teaching
 
-## Ku dnešeému dňu je aplikácia dokončená : 
+## Ku dnešému dňu je aplikácia dokončená : 
 
 
 ## Už je hotové : 
