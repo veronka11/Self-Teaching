@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-top:80px;">
   <h3>User Administration</h3>
   <table class='table'>
     <tr>
@@ -10,14 +10,19 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
 
     <% _.each(users, function(user) { %>
     <tr data-id="<%= user.id %>" data-model="user">
       <% if (user.typeof_user == 2) { %>
-      <td><td><span class="glyphicon glyphicon-user" aria-hidden="true"></span></td></td>
+      <td>
+      <td><span class="glyphicon glyphicon-user" aria-hidden="true"></span></td>
+      </td>
       <% } else { %>
-      <td><td><span class="glyphicon glyphicon-user" style="color:#81ff8b" aria-hidden="true"></span></td></td>
+      <td>
+      <td><span class="glyphicon glyphicon-user" style="color:#81ff8b" aria-hidden="true"></span></td>
+      </td>
       <% } %>
       <td><%= user.id %></td>
       <td><%= user.name %></td>
@@ -28,10 +33,12 @@
       <% } else { %>
       <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
       <% } %>
+      <% if (user.typeof_user != 1) { %>
+      <td><a href="/user/allCategories/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
       <!--
-      <td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
       <td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
       -->
+
       <td>
         <form action="/user/destroy/<%= user.id %>" method="POST">
           <input type="hidden" name="_method" value="delete"/>
@@ -39,6 +46,10 @@
           <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
         </form>
       </td>
+      <% } else { %>
+      <td></td>
+      <td></td>
+      <% } %>
     </tr>
 
     <% }) %>

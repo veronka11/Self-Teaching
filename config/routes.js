@@ -33,6 +33,7 @@ module.exports.routes = {
    ***************************************************************************/
 
   'get /test/selfTesting/:id/:name/:radios/:count':'TestController.selfTesting',
+  'get /user/allCategories/:id':'UserController.allCategories',
 
 
   '/': {
@@ -54,6 +55,10 @@ module.exports.routes = {
     'selfTesting': "flash",
     create: "flash",
     edit: "flash",
+    '*': "sessionAuth"
+  },
+  patterns_into_tests: {
+    create: "flash",
     '*': "sessionAuth"
   },
 

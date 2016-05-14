@@ -1,0 +1,87 @@
+<script>
+  function hideTr(id) {
+    if ($(".hide" + id).css('display') == 'none') {
+      povodnaVyska = $("#vyska").height();
+      $(".hide" + id).show(1000);
+      var novaVyska = $("#vyska").height();
+      document.getElementById('ciara').style.height = novaVyska.toString() + "px";
+    } else {
+      $(".hide" + id).hide(1000);
+      document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+    }
+  }
+
+
+</script>
+
+
+<div class="row">
+  <h1 style="margin-top: 100px; text-align: center;">All categories of User ... <%= o.actualUser.name %></h1>
+  <!--Table for all categories of user and of all users with public = true (1) -->
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <% if (o.categories.toString().length != 0){ %>
+    <table class="table table-condensed table-hover" style="margin-top: 30px;">
+      <tr class="info">
+        <td></td>
+        <td><strong>User</strong></td>
+        <td><strong>Category</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+
+      <% _.each(o.categories, function(categor) { %>
+      <tr data-id="<%= categor.id_user %>" data-model="categories" class="active">
+        <td><span class="glyphicon glyphicon-user" style="color:black; margin: 5px;" aria-hidden="true"></span></td>
+        <td><%= categor.nameU %></td>
+        <td><%= categor.nameC %></td>
+        <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
+        <td>
+          <button class="btn btn-sm btn-primary" id="<%= categor.idC %>" onclick="hideTr(this.id)">Show</button>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <!-- TRANSLATION-->
+
+      <tr class="hide<%= categor.idC %>" style="display:none; background-color: rgba(255, 37, 42, 0.45);">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><strong>Word</strong></td>
+        <td><strong>Translation</strong></td>
+        <td></td>
+      </tr>
+
+      <% _.each(o.patterns, function(p) { %>
+      <% if (categor.idC == p.idC) { %>
+      <tr class="hide<%= categor.idC %>" style="display:none;">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= p.word %></td>
+        <td><%= p.word_translation %></td>
+        <td></td>
+      </tr>
+      <% } %>
+
+      <% }) %>
+      <!-- end of pattern-->
+
+      <% }) %>
+      <% } else {%>  <!-- end if test if object exists-->
+      <div class="alert alert-info" style="margin-top: 15px;">
+        User <strong><%= o.actualUser.name %></strong> has no categories yet.
+      </div>
+      <% } %>
+      <!-- end of categories-->
+    </table>
+  </div>
+  <div class="col-md-3"></div>
+</div>

@@ -1,79 +1,144 @@
 <script>
+  $(document).ready(function () {
+    console.log("..........");
+    var test = <%- o.id_test %>;
+    console.log(test);
 
-  function specificCategory() {
-    $('#selector').show(300);
-    $('#selectorR').show(300);
-    random = false;
-  }
+    /* var patterns = <%- o.patterns %>;
+     console.log(patterns);*/
 
-  function allCategories() {
-    $('#selector').hide(300);
-    $('#selectorR').hide(300);
-    random = true;
-  }
+    var p = [];
+    <% _.each(o.patterns, function(pattern) { %>
+    p.push(<%- JSON.stringify(pattern) %>);
+    <% }); %>
+    console.log("+++++++  ", p);
 
-  function VratID_Name_category() {
-    //ID
-    var selectBox = document.getElementById("selector");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].id;
-    document.getElementById("id_category").value = selectedValue;
-    //NAME
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    document.getElementById("name_category").value = selectedValue;
-  }
-
-  function Zapamataj() {
-    console.log("zapamataj");
-    var selectBox = document.getElementById("selector");
-    categoryID = selectBox.options[selectBox.selectedIndex].id;
-    categoryName = selectBox.options[selectBox.selectedIndex].value;
-    testName = document.getElementById("testName").value;
-    countOfPatterns = document.getElementById("countOfPatterns").value;
-  }
-
+  });
 </script>
 
+
+<script>
+
+
+  function nahodnyVyber(pocet, pattern) {
+    if (pocet >= pattern.length) {
+      for (var i = 0; i < pattern.length; i++) {
+        pattern[i].answer = "";
+        pattern[i].result = "";
+      }
+      return pattern;
+    } else {
+      var pole = [];
+      var pozicia = [];
+      var j = 0;
+      while (pocet > 0) {
+        var hod = Math.floor((Math.random() * pattern.length));
+        if (pozicia.indexOf(hod) == -1) {
+          pattern[hod].answer = "";
+          pattern[hod].result = "";
+          pole.push(pattern[hod]);
+          pozicia.push(hod);
+          pocet = pocet - 1;
+        }
+      }
+      return pole;
+    }
+  }
+</script>
+
+
 <div class="container" style="margin-top: 80px;">
-
-
-  <form action="/test/selfTesting" method="POST" class="form-horizontal" id="formularTest2">
-    <fieldset id="polia">
-
-      <!-- Form Name -->
-      <legend><h3>New Test</h3></legend>
-
-      <% if(flash && flash.err) { %>
-      <ul class="alert alert-success">
-        <% Object.keys(flash.err).forEach(function(error) { %>
-        <li><%- JSON.stringify(flash.err[error]) %></li>
-        <% }) %>
-      </ul>
-      <% } %>
-
-      <!-- Text input-->
-      <div class="form-group">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <input id="numberofwords" value="" name="count" type="text" placeholder="Insert number of patterns"
-                 class="form-control">
-        </div>
-        <div class="col-md-3"></div>
+  <form action="/test/create" method="POST" class="form-horizontal" id="Answer">
+    <% if (Object.keys(o.patterns).length <= o.count ) { %>
+    <% _.each(o.patterns, function(p) { %>
+    <div class="form-inline">
+      <div class="col-md-2"></div>
+      <div class=" col-md-8" style="margin: 8px; text-align: right;">
+        <label for="exampleInputName2">
+          <%= p.word %>
+        </label>
+        <input type="text" class="form-control" id="<%= p.id %>" placeholder="Answer">
       </div>
+      <div class="col-md-2"></div>
+    </div>
 
+    <% }); %>
+    <% } else { %>
+    <script>
+      $(document).ready(function () {
+        var count = <%- o.count %>;
+        console.log(count);
+        var pole = [];
+        var random;
+        <% for(var i = 0; i < count; i++){ %>
+        random = Math.floor((Math.random() * <%= o.count %>));
+        while (pole.indexOf(random) != -1) {
+          random = Math.floor((Math.random() * <%= o.count %>));
+        }
+        pole.push(random);
+        <% } %>
+        pole = pole.sort();
 
-      <!-- Button -->
-      <div class="form-group">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Test"/>
-          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-          <input type="hidden" name="test" value="<%= true %>"/>
+        var i = 0;
+        var index = 0;
+        <% _.each(o.patterns, function(p) { %>
+        if (i === pole[index]) {
+          var d1 = Document.createElement('div');
+          d1.class = "form-inline";
+          var d11 = Document.createElement('div');
+          d11.class = "col-md-2";
 
-        </div>
-        <div class="col-md-3"></div>
-      </div>
+          var d12 = Document.createElement('div');
+          d12.class = "col-md-8";
+          var newlabel = document.createElement("Label");
+          newlabel.setAttribute("for", "exampleInputName2");
+          newlabel.innerHTML = <%= p.word %>;
+          d12.appendChild(newlabel);
+          var input = document.createElement("input");
+          input.type = "text";
+          input.class = "form-control";
+          input.id = "<%= p.id %>";
+          input.placeholder = "Answer";
+          d12.appendChild(input);
 
-    </fieldset>
+          var d13 = Document.createElement('div');
+          d13.class = "col-md-2";
+
+          d1.appendChild(d11);
+          d1.appendChild(d12);
+          d1.appendChild(d13);
+
+          index++;
+        }
+        i++;
+        <% }); %>
+      });
+    </script>
+    <% } %>
   </form>
-
 </div>
+
+
+<!--
+     { id_test: 5,
+  patterns:
+   [ { id_category: 8,
+       word: 'slon',
+       word_translation: 'elephant',
+       id: 15,
+       createdAt: null,
+       updatedAt: null },
+     { id_category: 8,
+       word: 'mačka',
+       word_translation: 'cat',
+       id: 16,
+       createdAt: null,
+       updatedAt: null },
+     { id_category: 8,
+       word: 'pes',
+       word_translation: 'dog',
+       id: 17,
+       createdAt: null,
+       updatedAt: null } ] }
+
+-->

@@ -1,88 +1,107 @@
 <script>
+  var p = [];
 
+  $(document).ready(function () {
+    <% _.each(o.patterns, function(pattern) { %>
+    p.push(<%- JSON.stringify(pattern) %>);
+    <% }); %>
+  });
 
-  function nahodnyVyber(pocet, pattern) {
-    if (pocet >= pattern.length) {
-      for (var i = 0; i < pattern.length; i++) {
-        pattern[i].answer = "";
-        pattern[i].result = "";
-      }
-      return pattern;
-    } else {
-      var pole = [];
-      var pozicia = [];
-      var j = 0;
-      while (pocet > 0) {
-        var hod = Math.floor((Math.random() * pattern.length));
-        if (pozicia.indexOf(hod) == -1) {
-          pattern[hod].answer = "";
-          pattern[hod].result = "";
-          pole.push(pattern[hod]);
-          pozicia.push(hod);
-          pocet = pocet - 1;
+  function Vyhodnot(elemId) {
+    var pattern;
+    var input = document.getElementById(elemId).value;
+    for (var i = 0; i < p.length; i++) {
+      if (p[i].id == elemId) {
+        if (p[i].word_translation == input) {
+          var ok = document.getElementById("OK" + elemId).style.visibility = "visible";
+          var bad = document.getElementById("BAD" + elemId).style.visibility = "hidden";
+          document.getElementById("result"+ elemId).value = 1;
+        } else {
+          var bad = document.getElementById("BAD" + elemId).style.visibility = "visible";
+          var ok = document.getElementById("OK" + elemId).style.visibility = "hidden";
+          document.getElementById("result"+ elemId).value = 0;
         }
       }
-      return pole;
     }
   }
-
 </script>
 
 
 <div class="container" style="margin-top: 80px;">
-  <form action="/test/create" method="POST" class="form-horizontal" id="Answer">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
 
-    <% _.each(o.patterns, function(p) { %>
-    <div class="form-inline">
-      <div class="col-md-2"></div>
-      <div class=" col-md-8" style="margin: 8px; text-align: right;">
-        <label for="exampleInputName2">
-          <%= p.word %>
-        </label>
-        <input type="text" class="form-control" id="<%= p.id %>" placeholder="Answer">
+    <form action="/Patterns_into_tests/create" method="POST" class="form-horizontal" id="Answer1">
+      <% if (Object.keys(o.patterns).length <= o.count ) { %>
+      <% _.each(o.patterns, function(p) { %>
+      <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class=" col-md-8" style="margin: 8px; text-align: left;">
+          <label for="exampleInputName2"
+                 style="border-radius: 0px 15px 0px 17px; padding: 5px; border-style: hidden; background-color: rgba(173, 255, 47, 0.62);">
+            <%= p.word %>
+          </label>
+          <input type="hidden" name="name_pattern" value="<%= p.word %>"/>
+          <input type="hidden" name="id_pattern" value="<%= p.id %>"/>
+          <input type="text" class="form-control" id="<%= p.id %>" name="answer" placeholder="Answer" onkeyup="Vyhodnot(this.id)">
+          <input type="hidden" id="result<%= p.id %>" name="result" value="0"/> <!-- 0 zle, 1 dobre-->
+          <span class="glyphicon glyphicon-ok" id="OK<%= p.id %>" aria-hidden="true"
+                style="color:#40ef00; visibility: hidden;"></span>
+          <span class="glyphicon glyphicon-remove" id="BAD<%= p.id %>" aria-hidden="true"
+                style="color:rgba(255, 42, 46, 0.64); visibility: hidden;"></span>
+        </div>
+        <div class="col-md-2"></div>
       </div>
-      <div class="col-md-2"></div>
-    </div>
 
-    <% }); %>
+      <% }); %>
 
-  </form>
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Evaluate results"/>
+          <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+          <input type="hidden" name="id_test" value="<%= o.id_test %>"/>
+          <input type="hidden" name="id_user" value="<%= o.id_user %>"/>
+
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-3"></div>
+  <% } else { %>
+
+  <div class="alert alert-info" style="margin-top: 90px;">
+    <strong>Info!</strong> This test does not have any patterns.
+  </div>
+
+  <% } %>
+
 </div>
 
-<script>
-  $(document).ready(function () {
-    console.log("..........");
-    console.log(<% a %>);
-
-    <% _.each(o.patterns, function(p) { %>
-    console.log("<%= p.word %>");
-    <% }); %>
-
-  });
-</script>
 
 <!--
- patterns:
-   [ { id_category: 7,
-       word: 'jabloň',
-       word_translation: 'apple tree',
-       id: 11 },
-     { id_category: 7,
-       word: 'broskyňový strom',
-       word_translation: 'peach tree',
-       id: 12 },
-     { id_category: 7,
-       word: 'marhuľpvý strom',
-       word_translation: 'apricot tree',
-       id: 13 },
-     { id_category: 7,
-       word: 'orechový strom',
-       word_translation: 'nutty tree',
-       id: 14 },
-     { id_category: 8,
+     { id_test: 5,
+  patterns:
+   [ { id_category: 8,
        word: 'slon',
        word_translation: 'elephant',
-       id: 15 },
-     { id_category: 8, word: 'mačka', word_translation: 'cat', id: 16 },
-     { id_category: 8, word: 'pes', word_translation: 'dog', id: 17 } ]
+       id: 15,
+       createdAt: null,
+       updatedAt: null },
+     { id_category: 8,
+       word: 'mačka',
+       word_translation: 'cat',
+       id: 16,
+       createdAt: null,
+       updatedAt: null },
+     { id_category: 8,
+       word: 'pes',
+       word_translation: 'dog',
+       id: 17,
+       createdAt: null,
+       updatedAt: null } ] }
+
 -->

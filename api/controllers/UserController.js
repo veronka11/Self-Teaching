@@ -12,7 +12,7 @@ module.exports = {
   },
 
   index: function (req, res, next) {
-
+    //console.log(req.params.all());
     User.find(function foundUsers(err, users) {
       if (err) return next(err);
 
@@ -21,8 +21,42 @@ module.exports = {
       });
     });
   },
-  create: function (req, res, next) {
 
+  'allCategories': function (req, res, next) {
+    var idUserString = req.param('id');
+    Category.query("SELECT category.name as nameC, public, category.id as idC, category.id_user as id_user, user.name as nameU " +
+      "FROM test.category " +
+      "inner join test.user on " +
+      "user.id = id_user and ((id_user=" + idUserString + "))", function (err2, categories) {
+      if (err2) return next(err2);
+
+      Pattern.query("SELECT id_category AS idC, word, word_translation FROM (SELECT id FROM test.category WHERE id_user =" +
+        idUserString + ") AS a, test.pattern " +
+        "WHERE a.id = id_category", function (err4, patterns) {
+        if (err4) return next(err4);
+
+        User.findOne(req.param('id'), function foundUser(err3, user) {
+          if (err3) return next(err3);
+
+          //console.log(req.params.all());
+          //console.log(categories);
+          //console.log(patterns);
+          var object = {};
+          object.patterns = patterns;
+          object.categories = categories;
+          object.actualUser = user;
+
+          //console.log(object);
+
+          res.view({
+            o: object
+          }); //res.view  end
+        }); //User.findOne  end
+      }); //Pattern.query  end
+    }); //Category.query  end
+  },
+
+  create: function (req, res, next) {
     User.create(req.params.all(), function userCreated(err, user) {
       //console.log(req.path);
       if (err) {
@@ -33,14 +67,6 @@ module.exports = {
 
         return res.redirect('/user/new');
       }
-
-      //res.json(user); //nahradene za ukadanie user.id
-
-      //user.typeof_user = 5;
-      //console.log(user);
-      //console.log(JSON.stringify(user));
-
-      //res.redirect('/user/show/' + user.id);
       req.session.flash = {
         message: true
       }
@@ -90,38 +116,39 @@ module.exports = {
 
         object.categories = categories;
 
-        //najde vsetky testy daneho uzivatela
+        //najde vsetky testy daneho uzivatela + jeho odpovede   pouzity inner join
+        //Test.query("SELECT * FROM test.test where id_user=" + idUserString, function (err3, tests) {
         Test.query("SELECT * FROM test.test where id_user=" + idUserString, function (err3, tests) {
           if (err3) return next(err3);
-
           object.tests = tests;
 
-          //pattern
-          //
           // SELECT id_category AS idC, word, word_translation FROM (SELECT id FROM tia.category WHERE id_user =5 OR (id_user <>5 AND public =1)) AS a, tia.pattern WHERE a.id = id_category
           Pattern.query("SELECT id_category AS idC, word, word_translation FROM (SELECT id FROM test.category WHERE id_user =" +
             idUserString + " OR (id_user <>" +
             idUserString + " AND public =1)) AS a, test.pattern " +
             "WHERE a.id = id_category", function (err4, patterns) {
             if (err4) return next(err4);
-
             object.patterns = patterns;
-            //console.log("o..__ ",object);
-            res.view({o: object});
 
+            Patterns_into_tests.query("SELECT " +
+              "name, id_user, id_category, test.id as id_test, id_pattern, answer, result, patterns_into_tests.id as id_patterns_into_tests " +
+              "FROM test.test " +
+              "inner join test.patterns_into_tests on test.id = patterns_into_tests.id_test and test.id_user =" + idUserString, function (err5, answers) {
+              if (err5) return next(err5);
+              object.answers = answers;
+
+              //console.log(object);
+
+              if (user.typeof_user == 1) {
+                res.redirect('/user');
+              } else {
+                res.view({o: object});
+              }
+            }); //Patterns_into_tests.query
           }); //pattern.query end
-
-
         }); //test.query end
-
-
       }); //category.query end
-
     }); //User.query end
-
-
   }
-
-
 };
 

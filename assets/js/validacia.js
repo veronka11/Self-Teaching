@@ -50,7 +50,7 @@ $(document).ready(function () {
       },
       numberofwords: {
         required: true,
-        min: 3
+        min: 2
       }
     },
     success: function (element) {

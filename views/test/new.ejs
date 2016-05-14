@@ -3,12 +3,16 @@
   function specificCategory() {
     $('#selector').show(300);
     $('#selectorR').show(300);
+    var selectBox = document.getElementById("selector");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].id;
+    document.getElementById("id_category").value = selectedValue;
     random = false;
   }
 
   function allCategories() {
     $('#selector').hide(300);
     $('#selectorR').show(300);
+    document.getElementById("id_category").value = -1;
     random = true;
   }
 

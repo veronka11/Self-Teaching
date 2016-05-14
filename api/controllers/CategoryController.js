@@ -102,7 +102,7 @@ module.exports = {
 
   // process the info from edit view
   update: function (req, res, next) {
-    //console.log("********  ", req.params.all());
+    console.log("********  ", req.params.all());
 
     Category.update(req.param('id'), req.params.all(), function userUpdated(err) {
       if (err) {
@@ -126,16 +126,30 @@ module.exports = {
           //values.push([word[i], translation[i]]);
         }
       }
-      //console.log("values", values);
-      //Pattern.query("UPDATE test.pattern SET ? WHERE id_category=" + id.toString(), values, function (err3, patterns) {
-      //Pattern.query("UPDATE test.pattern SET ?, ? WHERE ? AND id_category=" + id.toString(), values, function (err3, patterns) {
-      Pattern.query("UPDATE test.pattern SET word = " + req.param('word') + ", word_translation= " + req.param('word_translation') + " WHERE id = " + req.param('IDwords'), function (err3, patterns) {
+      //Pattern.query("UPDATE test.pattern SET word = " + req.param('word') + ", word_translation= " + req.param('word_translation') + " WHERE id = " + req.param('IDwords'), function (err3, patterns) {
+
+      /*
+       UPDATE Customers
+       SET ContactName='Alfred Schmidt', City='Hamburg'
+       WHERE CustomerName='Alfreds Futterkiste';
+       */
+      //viacej riadkov ma update
+
+      for (var i = 0; i < word.length; i++) {
+        /*Pattern.query("UPDATE test.pattern SET word = " + word[i] + ", word_translation = " + translation[i] +
+          " WHERE id = " + IDwords[i], function (err3, patterns) {
           if (err3) return next(err3);
-          res.redirect('/user/show/' + req.param('id_user'));
-        }
-      )
-      ; //pattern.query end
-      //res.redirect('/user/show/' + req.param('id_user'));
+          //res.redirect('/user/show/' + req.param('id_user'));
+        }); //pattern.query end
+        */
+
+        Pattern.update({ id: IDwords[i] }, {word: word[i], word_translation:translation[i]}).exec(function(err, p) {
+          if(err) {return res.serverError(err);}
+        });
+
+      } //koniec for
+
+      return res.redirect('/user/show/' + req.param('id_user'));
     }); // Category.update end
   },
 
