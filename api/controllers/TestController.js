@@ -48,7 +48,7 @@ module.exports = {
             console.log(patterns.length);
 
             var count = req.param('count');
-          var countAll = patterns.length;
+            var countAll = patterns.length;
             if (count < patterns.length) {
               console.log("idem robit pole.....");
               var random;
@@ -56,7 +56,7 @@ module.exports = {
               var patter = [];
               for (var i = 0; i < count; i++) {
                 random = Math.floor((Math.random() * countAll));
-                while (poleRadom.indexOf(random)!=-1){
+                while (poleRadom.indexOf(random) != -1) {
                   random = Math.floor((Math.random() * countAll));
                 }
                 poleRadom.push(random);
@@ -67,15 +67,14 @@ module.exports = {
               }
               console.log(poleRadom);
               object.patterns = patter;
-            }else{
+            } else {
               object.patterns = patterns;
             }
 
             //object.patterns = patterns;
 
             res.view({
-              o: object,
-
+              o: object
             });
           }
         ); //Pattern.find  end
@@ -95,10 +94,35 @@ module.exports = {
           console.log("_____________");
           console.log(object);
 
+          console.log(patterns);
+          console.log(patterns.length);
+
+          var count = req.param('count');
+          var countAll = patterns.length;
+          if (count < patterns.length) {
+            console.log("idem robit pole.....");
+            var random;
+            var poleRadom = [];
+            var patter = [];
+            for (var i = 0; i < count; i++) {
+              random = Math.floor((Math.random() * countAll));
+              while (poleRadom.indexOf(random) != -1) {
+                random = Math.floor((Math.random() * countAll));
+              }
+              poleRadom.push(random);
+              var x = patterns[random];
+              x.answer = "";
+              x.result = "";
+              patter.push(x);
+            }
+            console.log(poleRadom);
+            object.patterns = patter;
+          } else {
+            object.patterns = patterns;
+          }
+
           res.view({
-            o: object,
-            test: false,
-            a: 15
+            o: object
           });
 
 

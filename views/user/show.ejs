@@ -9,19 +9,25 @@
       document.getElementById('ciara').style.height = novaVyska.toString() + "px";
     } else {
       $(".hide" + id).hide(1000);
-      document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+      setTimeout(
+        function () {
+          document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+        }, 1000);
     }
   }
 
   function hideTr2(id) {
-    if ($(".hide" + id).css('display') == 'none') {
-      povodnaVyska = $("#vyska").height();
-      $(".hide" + id).show(1000);
-      var novaVyska = $("#vyska").height();
+    if ($(".hideT" + id).css('display') == 'none') {
+      povodnaVyska = $("#vyska2").height();
+      $(".hideT" + id).show(1000);
+      var novaVyska = $("#vyska2").height();
       document.getElementById('ciara').style.height = novaVyska.toString() + "px";
     } else {
-      $(".hide" + id).hide(1000);
-      document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+      $(".hideT" + id).hide(1000);
+      setTimeout(
+        function () {
+          document.getElementById('ciara').style.height = povodnaVyska.toString() + "px";
+        }, 1000);
     }
   }
 
@@ -104,8 +110,11 @@
       </table>
 
     </div>
+
     <div class="col-md-2" id="ciara"
-         style="border-left-style: outset; margin-left: 15px; width: 8px; margin-top: 15px;"></div>
+         style="border-left-style: outset; margin-left: 15px; width: 8px; margin-top: 15px;">
+    </div>
+
     <script>
       $(document).ready(function () {
         console.log("+++++++++++++");
@@ -114,7 +123,8 @@
         document.getElementById('ciara').style.height = b.toString() + "px";
       });
     </script>
-    <div class="col-md-5">
+
+    <div class="col-md-5" id="vyska2">
       <h2 class="nadpis2">All tests</h2>
       <a href="/test/new/<%= o.actualUser.id %>" class="btn btn-info" role="button">Create new Test</a>
 
@@ -140,7 +150,7 @@
           </td>
         </tr>
 
-        <tr class="hide<%= tests.id %>" style="display:none; background-color: rgba(255, 238, 53, 0.45);">
+        <tr class="hideT<%= tests.id %>" style="display:none; background-color: rgba(255, 238, 53, 0.45);">
           <td></td>
           <td></td>
           <td></td>
@@ -150,7 +160,7 @@
 
         <% _.each(o.answers, function(answer) { %>
         <% if (answer.id_test == tests.id) { %>
-        <tr class="hide<%= answer.id_test %>" style="display:none;">
+        <tr class="hideT<%= answer.id_test %>" style="display:none;">
           <td></td>
           <td></td>
           <td></td>
